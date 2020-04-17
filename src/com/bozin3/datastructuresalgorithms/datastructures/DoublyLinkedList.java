@@ -66,7 +66,9 @@ public class DoublyLinkedList {
 
         Node firstItem = head;
         head = firstItem.getNext();
-        head.setPrev(null);
+        if(head != null) {
+            head.setPrev(null);
+        }
         firstItem.setNext(null);
         size--;
         return firstItem.getData();

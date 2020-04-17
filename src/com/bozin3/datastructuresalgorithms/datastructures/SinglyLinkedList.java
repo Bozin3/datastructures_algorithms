@@ -4,21 +4,21 @@ public class SinglyLinkedList {
     private int size;
     private Node head;
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return head == null;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void add(String object){
-        if(isEmpty()){
-            head = new Node(object,null);
-        }else{
+    public void add(String object) {
+        if (isEmpty()) {
+            head = new Node(object, null);
+        } else {
             Node current = head;
 
-            while(current.getNext() != null){
+            while (current.getNext() != null) {
                 current = current.getNext();
             }
 
@@ -27,19 +27,19 @@ public class SinglyLinkedList {
         size++;
     }
 
-    public void add(int index, String object){
-        if(index > size){
+    public void add(int index, String object) {
+        if (index > size) {
             throw new IndexOutOfBoundsException();
         }
 
-        if(index == 0){
+        if (index == 0) {
             addFirst(object);
-        }else if(index == size - 1){
+        } else if (index == size - 1) {
             addLast(object);
-        }else{
+        } else {
             Node current = head;
             int i = 1;
-            while(i < index){
+            while (i < index) {
                 current = current.getNext();
                 i++;
             }
@@ -51,11 +51,11 @@ public class SinglyLinkedList {
         size++;
     }
 
-    public void addFirst(String object){
+    public void addFirst(String object) {
         Node newObj = new Node(object);
-        if(isEmpty()){
+        if (isEmpty()) {
             head = newObj;
-        }else{
+        } else {
             Node temp = head;
             head = newObj;
             newObj.setNext(temp);
@@ -63,34 +63,38 @@ public class SinglyLinkedList {
         size++;
     }
 
-    public void addLast(String object){
+    public void addLast(String object) {
         add(object);
     }
 
-    public void clear(){
+    public void clear() {
         head = null;
         size = 0;
     }
 
-    public String getFirst(){
-       return head.getData();
+    public String getFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        return head.getData();
     }
 
-    public String getLast(){
-        if(isEmpty()){
+    public String getLast() {
+        if (isEmpty()) {
             return null;
         }
 
         Node current = head;
-        while(current.getNext() != null){
+        while (current.getNext() != null) {
             current = current.getNext();
         }
 
         return current.getData();
     }
 
-    public String removeFirst(){
-        if(isEmpty()){
+    public String removeFirst() {
+        if (isEmpty()) {
             return null;
         }
 
@@ -101,18 +105,18 @@ public class SinglyLinkedList {
         return firstItem.getData();
     }
 
-    public String removeLast(){
-        if(isEmpty()){
+    public String removeLast() {
+        if (isEmpty()) {
             return null;
         }
 
-        if(head.getNext() == null){
+        if (head.getNext() == null) {
             clear();
             return null;
         }
 
         Node current = head;
-        while(current.getNext().getNext() != null){
+        while (current.getNext().getNext() != null) {
             current = current.getNext();
         }
         Node removedItem = current.getNext();
@@ -121,15 +125,15 @@ public class SinglyLinkedList {
         return removedItem.getData();
     }
 
-    public String get(int index){
+    public String get(int index) {
 
-        if(index >= size){
+        if (index >= size) {
             throw new IndexOutOfBoundsException();
         }
 
         Node current = head;
         int i = 0;
-        while(i < index){
+        while (i < index) {
             current = current.getNext();
             i++;
         }
@@ -137,16 +141,16 @@ public class SinglyLinkedList {
         return current.getData();
     }
 
-    public boolean contains(String object){
-        if(isEmpty()){
+    public boolean contains(String object) {
+        if (isEmpty()) {
             return false;
         }
 
         boolean found = true;
         Node current = head;
-        while (!current.getData().equals(object)){
+        while (!current.getData().equals(object)) {
             current = current.getNext();
-            if(current == null){
+            if (current == null) {
                 found = false;
                 break;
             }
