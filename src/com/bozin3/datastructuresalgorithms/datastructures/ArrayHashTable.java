@@ -12,31 +12,34 @@ public class ArrayHashTable {
         if(key == null){
             throw new IllegalArgumentException("Key must be provided");
         }
+
         int hashedKey = hashKey(key);
-
-        int freeIndex = -1;
-        for(int x = hashedKey; x < entries.length; x++){
-            // usually on the first loop, the hashedKey should be free
-            if(entries[x] == null || entries[x].getKey().equals(key)){
-                freeIndex = x;
-                break;
+        if(entries[hashedKey] != null && !entries[hashedKey].getKey().equals(key)){
+            int stopIndex = hashedKey;
+            boolean fromStart = false; // to prevent looping twice the entire array
+            if(hashedKey == entries.length - 1){
+                fromStart = true;
+                hashedKey = 0;
+            }else{
+                hashedKey ++;
             }
-        }
+            while (hashedKey < entries.length
+                    && hashedKey != stopIndex
+                    && entries[hashedKey] != null){
 
-        if(freeIndex == -1){
-            for(int x = 0; x < hashedKey; x++){
-                if(entries[x] == null || entries[x].getKey().equals(key)){
-                    freeIndex = x;
-                    break;
+                // example: if stopIndex is 5, we want to loop from 6 to 10, and from 0 to 4
+                if(!fromStart && hashedKey == entries.length - 1){
+                    hashedKey = 0;
+                }else{
+                    hashedKey ++;
                 }
             }
         }
 
-        // if we found free place
-        if(freeIndex != -1){
-            entries[freeIndex] = new StoredObject(key, data);
+        if(entries[hashedKey] != null && !entries[hashedKey].getKey().equals(key)){
+            System.out.println("There is no space left");
         }else{
-            System.out.println("No Free Space!");
+            entries[hashedKey] = new StoredObject(key, data);
         }
     }
 
@@ -47,7 +50,9 @@ public class ArrayHashTable {
 
         int hashedKey = hashKey(key);
         int stopIndex = hashedKey;
+        boolean fromStart = false;
         if(hashedKey == entries.length - 1){
+            fromStart = true;
             hashedKey = 0;
         }else{
             hashedKey++;
@@ -59,7 +64,7 @@ public class ArrayHashTable {
                 foundObj = entries[hashedKey];
                 break;
             }
-            if(hashedKey == entries.length - 1){
+            if(!fromStart && hashedKey == entries.length - 1){
                 hashedKey = 0;
             }else{
                 hashedKey++;
@@ -80,7 +85,9 @@ public class ArrayHashTable {
 
         int hashedKey = hashKey(key);
         int stopIndex = hashedKey;
+        boolean fromStart = false;
         if(hashedKey == entries.length - 1){
+            fromStart = true;
             hashedKey = 0;
         }else{
             hashedKey++;
@@ -92,7 +99,7 @@ public class ArrayHashTable {
                 foundObjIndex = hashedKey;
                 break;
             }
-            if(hashedKey == entries.length - 1){
+            if(!fromStart && hashedKey == entries.length - 1){
                 // start again from 0 index to stop index
                 hashedKey = 0;
             }else{
