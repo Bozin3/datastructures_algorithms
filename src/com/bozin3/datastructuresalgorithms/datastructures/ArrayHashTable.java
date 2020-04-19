@@ -46,24 +46,23 @@ public class ArrayHashTable {
         }
 
         int hashedKey = hashKey(key);
-
+        int stopIndex = hashedKey;
+        if(hashedKey == entries.length - 1){
+            hashedKey = 0;
+        }else{
+            hashedKey++;
+        }
         // loop from calculated index to end
         StoredObject foundObj = null;
-        for(int x = hashedKey; x < entries.length; x++){
-            // usually it should be found on the first loop if there are no hash key collisions
-            if(entries[x] != null && entries[x].getKey().equals(key)){
-                foundObj = entries[x];
+        while (hashedKey < entries.length && hashedKey != stopIndex && entries[hashedKey] != null){
+            if(entries[hashedKey].getKey().equals(key)){
+                foundObj = entries[hashedKey];
                 break;
             }
-        }
-
-        // if not found , loop again from start to calculated index
-        if(foundObj == null){
-            for(int x = 0; x < hashedKey; x++){
-                if(entries[x] != null && entries[x].getKey().equals(key)){
-                    foundObj = entries[x];
-                    break;
-                }
+            if(hashedKey == entries.length - 1){
+                hashedKey = 0;
+            }else{
+                hashedKey++;
             }
         }
 
@@ -80,32 +79,34 @@ public class ArrayHashTable {
         }
 
         int hashedKey = hashKey(key);
-
-        int foundIndex = -1;
-        for(int x = hashedKey; x < entries.length; x++){
-            // usually it should be found on the first loop if there are no hash key collisions
-            if(entries[x] != null && entries[x].getKey().equals(key)){
-                foundIndex = x;
+        int stopIndex = hashedKey;
+        if(hashedKey == entries.length - 1){
+            hashedKey = 0;
+        }else{
+            hashedKey++;
+        }
+        // loop from calculated index to end
+        int foundObjIndex = -1;
+        while (hashedKey < entries.length && hashedKey != stopIndex && entries[hashedKey] != null){
+            if(entries[hashedKey].getKey().equals(key)){
+                foundObjIndex = hashedKey;
                 break;
             }
-        }
-
-        if(foundIndex == -1){
-            for(int x = 0; x < hashedKey; x++){
-                if(entries[x] != null && entries[x].getKey().equals(key)){
-                    foundIndex = x;
-                    break;
-                }
+            if(hashedKey == entries.length - 1){
+                // start again from 0 index to stop index
+                hashedKey = 0;
+            }else{
+                hashedKey++;
             }
         }
 
-        if(foundIndex != -1){
-            String removedItem = entries[foundIndex].getData();
-            entries[foundIndex] = null;
+        if(foundObjIndex != -1){
+            StoredObject removedItem = entries[foundObjIndex];
+            entries[foundObjIndex] = null;
             rehash();
-            return removedItem;
+            return removedItem.getData();
         }else{
-           return null;
+            return null;
         }
     }
 
