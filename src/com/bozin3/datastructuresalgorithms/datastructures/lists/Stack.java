@@ -1,4 +1,4 @@
-package com.bozin3.datastructuresalgorithms.datastructures;
+package com.bozin3.datastructuresalgorithms.datastructures.lists;
 
 public class Stack {
 

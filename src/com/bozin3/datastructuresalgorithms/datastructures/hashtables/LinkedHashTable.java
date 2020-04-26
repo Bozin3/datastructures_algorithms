@@ -1,4 +1,5 @@
-package com.bozin3.datastructuresalgorithms.datastructures;
+package com.bozin3.datastructuresalgorithms.datastructures.hashtables;
+
 import java.util.LinkedList;
 
 public class LinkedHashTable {
