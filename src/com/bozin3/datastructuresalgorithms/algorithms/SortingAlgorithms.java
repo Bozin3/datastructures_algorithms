@@ -1,5 +1,7 @@
 package com.bozin3.datastructuresalgorithms.algorithms;
 
+import com.bozin3.datastructuresalgorithms.datastructures.trees.HeapTree;
+
 public class SortingAlgorithms {
     // O(n^2)
     public static void simpleSort(int[] array) {
@@ -206,5 +208,13 @@ public class SortingAlgorithms {
         int temp = array[secondPos];
         array[secondPos] = array[firstPos];
         array[firstPos] = temp;
+    }
+
+    public static int[] heapSort(int[] array) {
+        HeapTree heapTree = new HeapTree(array.length);
+        for(int item : array){
+            heapTree.insert(item);
+        }
+        return heapTree.sort();
     }
 }
